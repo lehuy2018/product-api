@@ -28,6 +28,7 @@ A simple Spring Boot RESTful API to manage products with full CRUD functionality
   "name": "Laptop",
   "price": 1500.0
 }
+```
 
 ### Search product
 - **GET** `/api/products/search?name=lap`
