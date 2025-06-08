@@ -1,4 +1,4 @@
-package com.example.future.controller;
+package com.example.future.api.product;
 
 import java.util.List;
 
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.future.entity.Product;
-import com.example.future.service.ProductService;
+import com.example.future.domain.product.model.Product;
+import com.example.future.domain.product.service.ProductService;
 
 @RestController
 @RequestMapping("/api/products")

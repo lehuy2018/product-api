@@ -1,11 +1,11 @@
-package com.example.future.service;
+package com.example.future.domain.product.service;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.future.entity.Product;
-import com.example.future.repository.ProductRepository;
+import com.example.future.domain.product.model.Product;
+import com.example.future.domain.product.repository.ProductRepository;
 
 @Service
 public class ProductService {

@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.example.future.entity.Product;
-import com.example.future.repository.ProductRepository;
+import com.example.future.domain.product.model.Product;
+import com.example.future.domain.product.repository.ProductRepository;
 
 @SpringBootTest
 class ProductRepositoryTests {
