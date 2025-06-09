@@ -2,6 +2,8 @@ package com.example.future.api.product;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.future.api.product.dto.ProductDTO;
-import com.example.future.api.product.mapper.ProductMapper;
 import com.example.future.domain.product.model.Product;
 import com.example.future.domain.product.service.ProductService;
 
@@ -26,31 +27,30 @@ import jakarta.validation.Valid;
 public class ProductController {
 
 	private final ProductService service;
-	private final ProductMapper mapper;
 
-	public ProductController(ProductService service, ProductMapper mapper) {
+	public ProductController(ProductService service) {
 		this.service = service;
-		this.mapper = mapper;
 	}
 
 	@GetMapping
-	public ResponseEntity<List<Product>> getAll() {
-		return ResponseEntity.ok(service.findAll());
+	public ResponseEntity<Page<ProductDTO>> getAll(@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "10") int size) {
+		Page<ProductDTO> result = service.getAllProducts(PageRequest.of(page, size));
+		return ResponseEntity.ok(result);
 	}
 
 	@PostMapping
 	public ResponseEntity<ProductDTO> create(@Valid @RequestBody ProductDTO dto) {
-		Product product = service.save(mapper.toEntity(dto));
-		return new ResponseEntity<>(mapper.toDto(product), HttpStatus.CREATED);
+		return new ResponseEntity<>(service.save(dto), HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody ProductDTO product) {
-		Product updated = service.update(id, mapper.toEntity(product));
+		ProductDTO updated = service.update(id, product);
 		if (updated == null) {
 			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.ok(mapper.toDto(updated));
+		return ResponseEntity.ok(updated);
 	}
 
 	@DeleteMapping("/{id}")
@@ -64,7 +64,8 @@ public class ProductController {
 
 	@GetMapping("/search")
 	public ResponseEntity<List<Product>> searchByName(@RequestParam String name) {
-		return ResponseEntity.ok(service.searchProductByName(name));
+		List<Product> searchProductByName = service.searchProductByName(name);
+		return ResponseEntity.ok(searchProductByName);
 	}
 
 }

@@ -3,6 +3,9 @@ package com.example.future.domain.product.repository;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.example.future.domain.product.model.Product;
 
 public interface ProductRepository {
@@ -11,7 +14,7 @@ public interface ProductRepository {
 //    @Query("SELECT p FROM Product p WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%'))")
 //    List<Product> searchByName(String name);
 
-	List<Product> findAll();
+	Page<Product> findAll(Pageable pageable);
 
 	Product save(Product product);
 

@@ -3,6 +3,8 @@ package com.example.future.infrastructure.repository;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import com.example.future.domain.product.model.Product;
@@ -15,11 +17,6 @@ public class JpaProductRepository implements ProductRepository {
 
 	public JpaProductRepository(JpaProductJpa jpa) {
 		this.jpa = jpa;
-	}
-
-	@Override
-	public List<Product> findAll() {
-		return jpa.findAll();
 	}
 
 	@Override
@@ -45,5 +42,10 @@ public class JpaProductRepository implements ProductRepository {
 	@Override
 	public List<Product> searchByName(String name) {
 		return jpa.findByNameContainingIgnoreCase(name);
+	}
+
+	@Override
+	public Page<Product> findAll(Pageable pageable) {
+		return jpa.findAll(pageable);
 	}
 }
